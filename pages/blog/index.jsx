@@ -12,8 +12,16 @@ async function getPosts() {
     );
 }
 
-export default async function DynamicPage() {
+export const getStaticProps = async () => {
     const posts = await getPosts();
+    return {
+        props: {
+            posts,
+        },
+    };
+};
+
+export default function BlogPage({ posts }) {
     return (
         <div>
             <h1>Blog</h1>

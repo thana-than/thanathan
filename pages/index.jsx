@@ -5,8 +5,16 @@ async function getGlobals() {
     return directus.request(readItems('global'));
 }
 
-export default async function HomePage() {
+export const getStaticProps = async () => {
     const global = await getGlobals();
+    return {
+        props: {
+            global,
+        },
+    };
+};
+
+export default function HomePage({ global }) {
     return (
         <div>
             <h1>{global.Test}</h1>
