@@ -1,12 +1,13 @@
 import directus from '@/lib/directus';
 import { readItems } from '@directus/sdk';
+import { getDisplayTitle } from '@/lib/blogPost';
 
 //* See https://directus.io/docs/tutorials/getting-started/fetch-data-from-directus-with-nextjs
 
 async function getPosts() {
     return directus.request(
         readItems('posts', {
-            fields: ['slug', 'title', 'date_created', { author: ['name'] }],
+            fields: ['slug', 'title', 'date_created', 'status', { author: ['name'] }],
             sort: ['-date_created'],
         })
     );
@@ -31,7 +32,7 @@ export default function BlogPage({ posts }) {
                         <li key={post.slug}>
                             <h2>
                                 <a href={`/blog/${post.slug}`}>
-                                    {post.title}
+                                    {getDisplayTitle(post)}
                                 </a>
                             </h2>
                             <span>

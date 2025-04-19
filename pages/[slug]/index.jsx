@@ -1,6 +1,7 @@
 import directus from '@/lib/directus';
 import { notFound } from 'next/navigation';
 import { readItems } from '@directus/sdk';
+import { getDisplayTitle } from '@/lib/blogPost';
 
 async function getPage(slug) {
     try {
@@ -55,7 +56,7 @@ export default function Page({ page }) {
     }
     return (
         <div>
-            <h1>{page.title}</h1>
+            <h1>{getDisplayTitle(page)}</h1>
             <div dangerouslySetInnerHTML={{ __html: page.content || '' }}></div>
         </div>
     );

@@ -1,5 +1,6 @@
 import directus from '@/lib/directus';
 import { readItems } from '@directus/sdk';
+import { getDisplayTitle } from '@/lib/blogPost';
 
 //* Get a single post by slug
 async function getPost(slug) {
@@ -51,7 +52,7 @@ export default function DynamicPage({ post }) {
         //TODO img if defined, if not use something default? idk
         <article>
             {/* <img src={`${directus.url}assets/${post.image.filename_disk}?width=600`} alt="" /> */}
-            <h1>{post.title}</h1>
+            <h1>{getDisplayTitle(post)}</h1>
             <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
         </article>
     );
