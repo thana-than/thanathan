@@ -24,3 +24,5 @@ jobs:
 
       - name: Build project
         run: npm run build
+        env:
+          CMS_URL: http://blog_directus:8055
