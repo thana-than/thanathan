@@ -13,6 +13,7 @@ jobs:
         with:
           ref: main
           token: ${{ secrets.RUNNER_TOKEN }}
+          github-server-url: 'http://host.docker.internal:3000'
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
