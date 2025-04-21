@@ -7,7 +7,6 @@ on:
 
 jobs:
   Explore-Gitea-Actions:
-    runs-on: linux
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
