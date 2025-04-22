@@ -1,0 +1,24 @@
+:root {
+    --bg: #13001E;
+    --fg: #DFDEBE;
+    --primary: #ADE5AA;
+    --secondary: #2DAAA8;
+    --tertiary: #193975;
+}
+
+body {
+    font-family: 'IBM Plex Sans', 'Arial', sans-serif;
+    padding: 20px 20px 60px;
+    max-width: 680px;
+    margin: 0 auto;
+    background-color: var(--bg);
+    color: var(--fg);
+}
+
+a {
+    color: var(--primary);
+}
+
+a.visited {
+    color: var(--secondary);
+}
