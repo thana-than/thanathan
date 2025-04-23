@@ -1,22 +1,224 @@
 :root {
-    --bg: #13001E;
-    --fg: #DFDEBE;
-    --primary: #ADE5AA;
-    --secondary: #2DAAA8;
-    --tertiary: #193975;
+    --background: #07000a;
+    --foreground: #EFFBF9;
+    --primary: #00BCF5;
+    --primary-light: #47D4FF;
+    --primary-dark: #0081A7;
+    --secondary: #600645;
+    --secondary-light: #a80b79;
+    --secondary-dark: #390428;
+    --tertiary: #B30014;
+
+
+    --font-main: 'IBM Plex Sans', 'Arial', sans-serif;
+    --font-mono: 'Space Mono', monospace;
 }
 
 body {
-    font-family: 'IBM Plex Sans', 'Arial', sans-serif;
-    padding: 20px 20px 60px;
-    max-width: 680px;
+    font-family: var(--font-main);
+    font-size: 12pt;
+    background-color: var(--background);
+    color: var(--foreground);
+    padding: 0;
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+/* .page {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+} */
+
+.page__main {
+    opacity: 100;
+    animation-name: fadeIn;
+    animation-duration: .5s;
+    transition: height 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 100%;
+    }
+}
+
+.page__outer {
+    padding: 1rem;
+}
+
+.page__wrapper {
+    max-width: 600px;
     margin: 0 auto;
-    background-color: var(--bg);
-    color: var(--fg);
+}
+
+.page__header {
+    background-color: var(--background);
+    z-index: 10;
+    padding: 3rem 1rem 1rem;
+    top: 0;
+    position: fixed;
+    width: 100%;
+    justify-content: space-between;
+    align-items: baseline;
+    left: 50%;
+    transform: translate(-50%, 0);
+    min-height: 3em;
+    font-size: 10.5pt;
+}
+
+.page__footer {
+    background-color: var(--background);
+    z-index: 1;
+    position: relative;
+    width: 100%;
+    padding: 1em;
+    font-size: 10.5pt;
+    bottom: 0;
+    bottom: auto;
+    left: auto;
+    margin-bottom: 0;
+}
+
+.page__header-spaceHolder {
+    padding: 3rem 1rem 1rem;
+    transition: height 0.3s ease;
+    width: 100%;
+    position: relative;
+}
+
+.page__header-gradient,
+.page__footer-gradient {
+    height: 4em;
+    width: 100%;
+    left: 50%;
+    z-index: 8;
+    pointer-events: none;
+    transform: translate(-50%, 0);
+    background: linear-gradient(var(--background), transparent);
+    position: absolute;
+    transition: opacity 0.3s ease;
+}
+
+.page__header-outer {
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.page__header-gradient {
+    top: 100%;
+}
+
+.hidden {
+    opacity: 0%;
+    pointer-events: none;
+}
+
+.page__footer-gradient {
+    bottom: 100%;
+    background: linear-gradient(transparent, var(--background));
+}
+
+.page__header-border,
+.page__footer-border {
+    position: absolute;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background: var(--secondary);
+    z-index: 9;
+}
+
+.page__footer-border {
+    top: 0%;
+}
+
+.page__header-border {
+    bottom: 0%;
+}
+
+.page__footer-outer {
+    padding-top: 0;
+}
+
+.page__title {
+    line-height: 110%;
+    margin: auto;
+    padding: 0;
+}
+
+.page__header-left {
+    text-align: left;
+    display: flex;
+}
+
+.page__header-right {
+    text-align: right;
+    display: flex;
+}
+
+.page__header-entry,
+.page__footer-entry {
+    padding-bottom: .5em;
+}
+
+.page__header-entry:last-child,
+.page__footer-entry:last-child,
+.page__nav-link:last-child {
+    padding-bottom: 0;
+    margin-inline-end: 0;
+}
+
+.page__nav-link:first-child {
+    margin-inline-start: 0;
+}
+
+.page__nav-link {
+    margin-inline-start: .25em;
+    margin-inline-end: .25em;
+}
+
+.page__breadcrumbs,
+.page__nav {
+    color: var(--secondary);
 }
 
 a {
     color: var(--primary);
+    text-decoration: none;
+}
+
+a.page__footer-entry,
+a.page__header-entry,
+a.page__breadcrumbs-link,
+a.page__nav-link {
+    color: var(--secondary-light);
+}
+
+a:hover.page__footer-entry,
+a:hover.page__header-entry,
+a.page__breadcrumbs-link:hover,
+a.page__nav-link:hover {
+    color: var(--secondary);
+}
+
+a:hover {
+    color: var(--primary-dark);
 }
 
 a.visited {

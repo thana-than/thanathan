@@ -1,6 +1,7 @@
 import directus from '@/lib/directus';
 import { readItems } from '@directus/sdk';
-import { getDisplayTitle } from '@/lib/blogPost';
+import { getDisplayTitle } from '@/lib/props';
+import Link from 'next/link';
 
 //* See https://directus.io/docs/tutorials/getting-started/fetch-data-from-directus-with-nextjs
 
@@ -17,6 +18,7 @@ export const getStaticProps = async () => {
     const posts = await getPosts();
     return {
         props: {
+            'title': "Blog",
             posts,
         },
     };
@@ -24,24 +26,24 @@ export const getStaticProps = async () => {
 
 export default function BlogPage({ posts }) {
     return (
-        <div>
-            <h1>Blog</h1>
+        <>
             <ul>
                 {posts.map((post) => {
                     return (
                         <li key={post.slug}>
-                            <h2>
-                                <a href={`/blog/${post.slug}`}>
+                            <h3>
+                                <Link href={`/blog/${post.slug}`}>
                                     {getDisplayTitle(post)}
-                                </a>
-                            </h2>
+                                </Link>
+                            </h3>
                             <span>
                                 {post.date_created} &bull; {post.author.name}
                             </span>
                         </li>
                     );
                 })}
+
             </ul>
-        </div>
+        </>
     );
 }

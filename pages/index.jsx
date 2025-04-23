@@ -1,24 +1,18 @@
 import directus from '@/lib/directus';
-import { readItems } from '@directus/sdk';
-
-async function getGlobals() {
-    return directus.request(readItems('global'));
-}
+import Link from 'next/link';
 
 export const getStaticProps = async () => {
-    const global = await getGlobals();
     return {
         props: {
-            global,
+            'title': "Hi, I'm Than",
         },
     };
-};
+}
 
-export default function HomePage({ global }) {
+export default function HomePage() {
     return (
-        <div>
-            <h1>Hello, World!</h1>
-            <h2>{global.Test}</h2>
-        </div>
+        <>
+            <Link href='/blog'>Blog</Link>
+        </>
     );
 }
