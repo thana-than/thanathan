@@ -1,6 +1,8 @@
 import React from 'react'
-import { Breadcrumbs, FooterNav } from '@/components/Nav';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { Breadcrumbs, FooterNav } from '@/components/Nav';
+import ProfilePic from '@/components/ProfilePic';
 
 const scrollFadeMargin = 10;
 const defaultHeaderHeight = 115.2;
@@ -15,8 +17,12 @@ export const Block = React.forwardRef(({ children, outer_classes, inner_classes 
     );
 });
 
-export function Header({ title, subHead }) {
+export function Header({ title, subHead, date }) {
+    const router = useRouter();
+    const isHome = router.pathname === '/';
+
     const [showGradient, setShowGradient] = React.useState(false);
+    const [playVideo, setPlayVideo] = React.useState(false);
 
     const headerRef = React.useRef(null);
     const [headerHeight, setHeaderHeight] = React.useState(defaultHeaderHeight);
@@ -53,20 +59,32 @@ export function Header({ title, subHead }) {
                 </div>
             );
         } else {
-            return <Breadcrumbs className="page__header-entry" />;
+            return <Breadcrumbs />;
         }
     };
 
     return (
-        <>
+        <div >
             <div className='page__header-spaceHolder' style={{ height: headerHeight }}></div>
-            <div className='page__wrapper page__header' ref={headerRef}>
+            <div className='page__wrapper page__header'
+                ref={headerRef}
+                onMouseEnter={() => setPlayVideo(true)}
+                onMouseLeave={() => setPlayVideo(false)}
+            >
                 <div className='page__header-border'></div>
                 <div className={`page__header-gradient ${showGradient ? '' : 'hidden'}`}></div>
-                <h1 className='page__header-entry page__title'>{title || 'Thanathan'}</h1>
-                <RenderSubHead />
+                <div className='page__header-block'>
+                    <ProfilePic playVideo={isHome || playVideo} />
+                    <div className='page__header-titles'>
+                        <h1 className='page__header-entry page__title'>{title || 'Thanathan'}</h1>
+                        <div className='page__header-sub'>
+                            <RenderSubHead />
+                            <div className='page__header-entry page__header-date'>{date}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </>
+        </div>
     );
 };
 
@@ -98,6 +116,7 @@ export function Footer() {
     return (
         <Block inner_classes="page__footer" outer_classes="page__footer-outer">
             <FooterNav className="page__footer-entry" />
+            <Link className="page__footer-entry page__right" href='/'>thanathan.com</Link>
             <div className='page__footer-border'></div>
             {/* <div className={`page__footer-gradient ${showGradient ? '' : 'hidden'}`}></div> */}
         </Block>

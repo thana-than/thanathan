@@ -1,12 +1,13 @@
 import directus from '@/lib/directus';
 import { readItems } from '@directus/sdk';
+import { formatDate } from '@/lib/formatting';
 
 //* Get a single post by slug
 async function getPost(slug) {
     const posts = await directus.request(
         readItems('posts', {
             filter: { slug: { _eq: slug } },
-            //fields: ['title', 'content', 'image', { author: ['name'] }],
+            fields: ['title', 'content', 'date_published', { author: ['name'] }],
             limit: 1,
         })
     );
@@ -47,11 +48,13 @@ export async function getStaticProps({ params }) {
 }
 
 export default function Page({ post }) {
+    const author = post?.author?.name || "Than";
     return (
         //TODO img if defined, if not use something default? idk
         <article>
             {/* <img src={`${directus.url}assets/${post.image.filename_disk}?width=600`} alt="" /> */}
             <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
+            <div className='page__author'>by {author} on {formatDate(post.date_published)}</div>
         </article>
     );
 }

@@ -1,6 +1,7 @@
 :root {
     --background: #07000a;
     --foreground: #EFFBF9;
+    --foreground-faded: #EFFBF999;
     --primary: #00BCF5;
     --primary-light: #47D4FF;
     --primary-dark: #0081A7;
@@ -21,6 +22,7 @@ body {
     color: var(--foreground);
     padding: 0;
     margin: 0;
+    width: 100%;
 }
 
 h1,
@@ -30,6 +32,38 @@ h4,
 h5,
 h6 {
     font-weight: normal;
+}
+
+ul,
+li {
+    padding: 0;
+}
+
+.page__author {
+    font-size: 9pt;
+    font-style: italic;
+    text-align: right;
+}
+
+.page__title {
+    line-height: 110%;
+    margin: auto;
+    padding: 0;
+    font-size: 21pt;
+}
+
+.page__header-titles {
+    width: 100%;
+}
+
+.page__header-sub {
+    display: flex;
+    justify-content: space-between;
+}
+
+.page__header-date {
+    font-size: 9pt;
+    display: flex;
 }
 
 /* .page {
@@ -58,13 +92,75 @@ h6 {
     }
 }
 
+.page__header-profilePic {
+    border-radius: 10px;
+    height: 64px;
+    margin-right: 0em;
+    width: auto;
+    transform: translate(-1em, 0);
+}
+
 .page__outer {
     padding: 1rem;
 }
 
 .page__wrapper {
-    max-width: 600px;
+    max-width: 640px;
     margin: 0 auto;
+}
+
+@media (max-width: 760px) {
+    .page__outer {
+        margin: auto;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .page__title {
+        font-size: 18pt;
+    }
+
+    .page__wrapper {
+        max-width: 80%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .page__header-profilePic {
+        transform: translate(1em, 0);
+        margin-right: 2em;
+    }
+
+    .page__title {
+        font-size: 14pt;
+    }
+
+    .page__outer {
+        margin: auto;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .page__wrapper {
+        margin: auto;
+        padding-left: 1em;
+        padding-right: 1em;
+        max-width: 100%;
+    }
+}
+
+.page__blog-entry {
+    list-style-type: none;
+}
+
+.page__blog-entry {
+    list-style-type: none;
+    padding-bottom: 1em;
+}
+
+.page__blog-entry:last-child {
+    padding-bottom: 0;
 }
 
 .page__header {
@@ -84,6 +180,9 @@ h6 {
 
 .page__footer {
     background-color: var(--background);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
     z-index: 1;
     position: relative;
     width: 100%;
@@ -95,8 +194,12 @@ h6 {
     margin-bottom: 0;
 }
 
+.page__header-block {
+    display: flex;
+}
+
 .page__header-spaceHolder {
-    padding: 3rem 1rem 1rem;
+    padding: 3rem 0rem 1rem;
     transition: height 0.3s ease;
     width: 100%;
     position: relative;
@@ -156,18 +259,12 @@ h6 {
     padding-top: 0;
 }
 
-.page__title {
-    line-height: 110%;
-    margin: auto;
-    padding: 0;
-}
-
 .page__header-left {
     text-align: left;
     display: flex;
 }
 
-.page__header-right {
+.page__right {
     text-align: right;
     display: flex;
 }

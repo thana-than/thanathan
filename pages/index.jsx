@@ -1,18 +1,21 @@
 import directus from '@/lib/directus';
-import Link from 'next/link';
+import { readItems } from '@directus/sdk';
+
 
 export const getStaticProps = async () => {
+    const homepage = await directus.request(readItems('homepage'));
     return {
         props: {
-            'title': "Hi, I'm Than",
+            homepage
         },
     };
-}
+};
 
-export default function HomePage() {
+
+export default function HomePage({ homepage }) {
     return (
         <>
-            <Link href='/blog'>Blog</Link>
+            <div dangerouslySetInnerHTML={{ __html: homepage.content || '' }}></div>
         </>
     );
 }
