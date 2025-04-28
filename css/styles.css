@@ -66,20 +66,21 @@ li {
     display: flex;
 }
 
-/* .page {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    position: relative;
-} */
-
 .page__main {
     opacity: 100;
-    animation-name: fadeIn;
-    animation-duration: .5s;
-    transition: height 0.3s ease;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translate(0, 1rem) scaleX(.9) skew(2deg, 2deg);
+    }
+
+    100% {
+        opacity: 100%;
+        transform: translate(0, 0) scaleX(1) skew(0, 0);
+    }
 }
 
 @keyframes fadeIn {
@@ -168,12 +169,10 @@ li {
     z-index: 10;
     padding: 3rem 1rem 1rem;
     top: 0;
-    position: fixed;
+    position: sticky;
     width: 100%;
     justify-content: space-between;
     align-items: baseline;
-    left: 50%;
-    transform: translate(-50%, 0);
     min-height: 3em;
     font-size: 10.5pt;
 }

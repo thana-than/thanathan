@@ -5,7 +5,7 @@ import { Breadcrumbs, FooterNav } from '@/components/Nav';
 import ProfilePic from '@/components/ProfilePic';
 
 const scrollFadeMargin = 10;
-const defaultHeaderHeight = 115.2;
+const defaultHeaderHeight = 0;//115.2;
 
 export const Block = React.forwardRef(({ children, outer_classes, inner_classes }, ref) => {
     return (
@@ -23,21 +23,6 @@ export function Header({ title, subHead, date }) {
 
     const [showGradient, setShowGradient] = React.useState(false);
     const [playVideo, setPlayVideo] = React.useState(false);
-
-    const headerRef = React.useRef(null);
-    const [headerHeight, setHeaderHeight] = React.useState(defaultHeaderHeight);
-
-    React.useEffect(() => {
-        if (!headerRef.current) return;
-
-        const observer = new ResizeObserver(([entry]) => {
-            setHeaderHeight(entry.contentRect.height);
-        });
-
-        observer.observe(headerRef.current);
-        return () => observer.disconnect();
-    }, [headerRef, headerHeight]);
-
 
     React.useEffect(() => {
         const handleScroll = () => {
@@ -64,23 +49,19 @@ export function Header({ title, subHead, date }) {
     };
 
     return (
-        <div >
-            <div className='page__header-spaceHolder' style={{ height: headerHeight }}></div>
-            <div className='page__wrapper page__header'
-                ref={headerRef}
-                onMouseEnter={() => setPlayVideo(true)}
-                onMouseLeave={() => setPlayVideo(false)}
-            >
-                <div className='page__header-border'></div>
-                <div className={`page__header-gradient ${showGradient ? '' : 'hidden'}`}></div>
-                <div className='page__header-block'>
-                    <ProfilePic playVideo={isHome || playVideo} />
-                    <div className='page__header-titles'>
-                        <h1 className='page__header-entry page__title'>{title || 'Thanathan'}</h1>
-                        <div className='page__header-sub'>
-                            <RenderSubHead />
-                            <div className='page__header-entry page__header-date'>{date}</div>
-                        </div>
+        <div className='page__wrapper page__header'
+            onMouseEnter={() => setPlayVideo(true)}
+            onMouseLeave={() => setPlayVideo(false)}
+        >
+            <div className='page__header-border'></div>
+            <div className={`page__header-gradient ${showGradient ? '' : 'hidden'}`}></div>
+            <div className='page__header-block'>
+                <ProfilePic playVideo={isHome || playVideo} />
+                <div className='page__header-titles'>
+                    <h1 className='page__header-entry page__title'>{title || 'Thanathan'}</h1>
+                    <div className='page__header-sub'>
+                        <RenderSubHead />
+                        <div className='page__header-entry page__header-date'>{date}</div>
                     </div>
                 </div>
             </div>
@@ -90,7 +71,7 @@ export function Header({ title, subHead, date }) {
 
 export function Main({ children }) {
     return (
-        <Block outer_classes="page__main">
+        <Block key={Math.random()} outer_classes="page__main">
             {children}
         </Block>
     );
