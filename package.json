@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "set NODE_EXTRA_CA_CERTS=./certs/thanserver.lan.crt && next dev",
     "build": "set NODE_EXTRA_CA_CERTS=./certs/thanserver.lan.crt && next build",
-    "start": "next start",
+    "start": "npx serve@latest out",
     "lint": "next lint"
   },
   "dependencies": {
