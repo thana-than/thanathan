@@ -43,9 +43,10 @@ ul {
 }
 
 h1 {
-    padding-bottom: .2em;
+    padding-bottom: .33em;
     border-bottom: 1px solid var(--secondary);
     margin-bottom: 1rem;
+    margin-top: 2rem;
 
     font-size: 18pt;
 }
