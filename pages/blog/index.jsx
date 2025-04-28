@@ -10,7 +10,7 @@ async function getPosts() {
     return directus.request(
         readItems('posts', {
             fields: ['slug', 'title', 'date_published', 'status', { author: ['name'] }],
-            sort: ['-date_created'],
+            sort: ['-date_published'],
         })
     );
 }
