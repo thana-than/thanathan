@@ -17,7 +17,7 @@
 
 body {
     font-family: var(--font-main);
-    font-size: 12pt;
+    font-size: 11pt;
     background-color: var(--background);
     color: var(--foreground);
     padding: 0;
@@ -25,6 +25,7 @@ body {
     width: 100%;
 }
 
+p,
 h1,
 h2,
 h3,
@@ -32,6 +33,50 @@ h4,
 h5,
 h6 {
     font-weight: normal;
+    margin-bottom: .5rem;
+}
+
+p,
+li,
+ul {
+    margin-top: 0;
+}
+
+h1 {
+    padding-bottom: .2em;
+    border-bottom: 1px solid var(--secondary);
+    margin-bottom: 1rem;
+
+    font-size: 18pt;
+}
+
+h2 {
+    font-size: 15pt;
+    margin-inline-start: .2rem;
+    margin-inline-end: .2rem;
+}
+
+h3 {
+    font-size: 13pt
+}
+
+p,
+h3,
+h4,
+h5,
+h6,
+li,
+ul {
+    margin-inline-start: .66rem;
+    margin-inline-end: .66rem;
+}
+
+h1:last-child h2:last-child h3:last-child h4:last-child h5:last-child h6:last-child,
+p:last-child,
+span:last-child,
+li:last-child,
+ul:last-child {
+    margin-bottom: 0;
 }
 
 ul,
@@ -46,6 +91,7 @@ li {
 }
 
 .page__title {
+    border: none;
     line-height: 110%;
     margin: auto;
     padding: 0;
@@ -66,10 +112,7 @@ li {
     display: flex;
 }
 
-.page__main {
-    opacity: 100;
-    animation: slideIn 0.3s ease;
-}
+
 
 @keyframes slideIn {
     0% {
@@ -103,6 +146,12 @@ li {
 
 .page__outer {
     padding: 1rem;
+}
+
+.page__main {
+    opacity: 100;
+    padding: 2rem;
+    animation: slideIn 0.3s ease;
 }
 
 .page__wrapper {
@@ -168,7 +217,7 @@ li {
     background-color: var(--background);
     z-index: 10;
     padding: 3rem 1rem 1rem;
-    top: 0;
+    top: -2rem;
     position: sticky;
     width: 100%;
     justify-content: space-between;
@@ -195,13 +244,6 @@ li {
 
 .page__header-block {
     display: flex;
-}
-
-.page__header-spaceHolder {
-    padding: 3rem 0rem 1rem;
-    transition: height 0.3s ease;
-    width: 100%;
-    position: relative;
 }
 
 .page__header-gradient,
