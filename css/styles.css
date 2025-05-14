@@ -176,7 +176,51 @@ li {
     }
 }
 
+.page__games-content {
+    padding-bottom: 1.5em;
+}
+
+.page__games-container {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    justify-content: center;
+}
+
+.page__games-entry {
+    width: 180px;
+    display: inline-block;
+    list-style-type: none;
+    padding-bottom: 1em;
+}
+
+.page__games-entry img {
+    width: 180px;
+    height: 140px;
+    background-color: var(--secondary);
+    border-radius: 5px;
+    border: 1px solid var(--secondary-light);
+    object-fit: cover;
+    transition: opacity .1s ease, border-color .1s ease;
+}
+
+.page__games-entry:hover img {
+    opacity: 70%;
+    border-color: var(--secondary);
+}
+
 @media (max-width: 480px) {
+
+    .page__games-entry {
+        width: 240px;
+        text-align: center;
+        font-size: larger;
+    }
+
+    .page__games-entry img {
+        width: 240px;
+        height: 186px;
+    }
 
     .page__header-profilePic {
         transform: translate(1em, 0);
@@ -340,20 +384,7 @@ li {
 a {
     color: var(--primary);
     text-decoration: none;
-}
-
-a.page__footer-entry,
-a.page__header-entry,
-a.page__breadcrumbs-link,
-a.page__nav-link {
-    color: var(--secondary-light);
-}
-
-a:hover.page__footer-entry,
-a:hover.page__header-entry,
-a.page__breadcrumbs-link:hover,
-a.page__nav-link:hover {
-    color: var(--secondary);
+    transition: color .1s ease
 }
 
 a:hover {
@@ -361,5 +392,21 @@ a:hover {
 }
 
 a.visited {
+    color: var(--secondary);
+}
+
+a.page__footer-entry,
+a.page__header-entry,
+a.page__breadcrumbs-link,
+a.page__nav-link,
+.page__games-entry a {
+    color: var(--secondary-light);
+}
+
+a:hover.page__footer-entry,
+a:hover.page__header-entry,
+a.page__breadcrumbs-link:hover,
+a.page__nav-link:hover,
+.page__games-entry:hover a {
     color: var(--secondary);
 }

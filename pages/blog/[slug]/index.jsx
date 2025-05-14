@@ -1,4 +1,4 @@
-import directus from '@/lib/directus';
+import directus, { parseContent, downloadFile } from '@/lib/directus';
 import { readItems } from '@directus/sdk';
 import { formatDate } from '@/lib/formatting';
 
@@ -7,11 +7,24 @@ async function getPost(slug) {
     const posts = await directus.request(
         readItems('posts', {
             filter: { slug: { _eq: slug } },
-            fields: ['title', 'content', 'date_published', { author: ['name'] }],
+            fields: ['title', 'content', 'date_published', 'image', { author: ['name'] }],
             limit: 1,
         })
     );
-    return posts[0] || null;
+
+    const item = posts[0];
+    if (!item)
+        return null;
+
+    if (item.content) {
+        item.content = await parseContent(item.content);
+    }
+
+    if (item.image) {
+        item.image = await downloadFile(item.image);
+    }
+
+    return item;
 }
 
 //* Get all slugs for static generation
@@ -52,7 +65,6 @@ export default function Page({ post }) {
     return (
         //TODO img if defined, if not use something default? idk
         <article>
-            {/* <img src={`${directus.url}assets/${post.image.filename_disk}?width=600`} alt="" /> */}
             <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
             <div className='page__author'>by {author} on {formatDate(post.date_published)}</div>
         </article>
