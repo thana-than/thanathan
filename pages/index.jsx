@@ -1,11 +1,7 @@
-import directus, { parseContent } from '@/lib/directus';
-import { readItems } from '@directus/sdk';
-
+import { getPage } from '@/lib/cms';
 
 export const getStaticProps = async () => {
-    const homepage = await directus.request(readItems('homepage'));
-
-    homepage.content = await parseContent(homepage.content);
+    const homepage = await getPage('homepage');
 
     return {
         props: {
@@ -13,7 +9,6 @@ export const getStaticProps = async () => {
         },
     };
 };
-
 
 export default function HomePage({ homepage }) {
     return (
