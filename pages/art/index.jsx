@@ -2,7 +2,7 @@ import PageLayout from '@/lib/itemPage.jsx';
 import { getItemPage } from '@/lib/cms';
 
 export async function getStaticProps() {
-    return await getItemPage('games', { 'project_type': { '_eq': 1 } });
+    return await getItemPage('art', { 'project_type': { '_neq': 1 } });
 }
 
 export default function Page({ page, items }) {

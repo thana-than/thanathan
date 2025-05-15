@@ -1,25 +1,11 @@
-import directus, { getPage } from '@/lib/directus';
-import { readItems } from '@directus/sdk';
+import { getPage, getSlugPaths } from '@/lib/cms';
 import reservedSlugs from '@/lib/reservedSlugs';
 
 export async function getStaticPaths() {
-    const pages = await directus.request(
-        readItems('pages', {
-            fields: ['slug'],
-        })
-    );
-
-    const paths = pages.filter((item) => !reservedSlugs.includes(item.slug)).map((page) => ({
-        params: { slug: page.slug },
-    }));
-
-    return {
-        paths,
-        fallback: false,
-    };
+    return await getSlugPaths('pages', { 'slug': { '_nin': reservedSlugs } });
 }
 
-// Fetch page data based on the slug
+//* Fetch page data based on the slug
 export async function getStaticProps({ params }) {
     const { slug } = params;
     const page = await getPage(slug);

@@ -1,53 +1,19 @@
-import directus, { parseContent, downloadFile } from '@/lib/directus';
-import { readItems } from '@directus/sdk';
+import { request, getSlugPaths } from '@/lib/cms';
 import { formatDate } from '@/lib/formatting';
-
-//* Get a single post by slug
-async function getPost(slug) {
-    const posts = await directus.request(
-        readItems('posts', {
-            filter: { slug: { _eq: slug } },
-            fields: ['title', 'content', 'date_published', 'image', { author: ['name'] }],
-            limit: 1,
-        })
-    );
-
-    const item = posts[0];
-    if (!item)
-        return null;
-
-    if (item.content) {
-        item.content = await parseContent(item.content);
-    }
-
-    if (item.image) {
-        item.image = await downloadFile(item.image);
-    }
-
-    return item;
-}
 
 //* Get all slugs for static generation
 export async function getStaticPaths() {
-    const posts = await directus.request(
-        readItems('posts', {
-            fields: ['slug'],
-        })
-    );
-
-    const paths = posts.map((post) => ({
-        params: { slug: post.slug },
-    }));
-
-    return {
-        paths,
-        fallback: false,
-    };
+    return await getSlugPaths('posts');
 }
 
 //* Fetch post data based on slug
 export async function getStaticProps({ params }) {
-    const post = await getPost(params.slug);
+    const post = (await request(
+        'posts', {
+        filter: { slug: { _eq: params.slug } },
+        fields: ['title', 'content', 'date_published', 'image', { author: ['name'] }],
+        limit: 1
+    }))[0];
 
     if (!post) {
         return { notFound: true };

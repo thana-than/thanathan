@@ -1,36 +1,17 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## ThanaThan.com
+This is the frontend for my static React website/blog.
 
-## Getting Started
+## Dev Environment
+I use [Next.js](https://nextjs.org) within the dev environment.
+Because of this you should install and be a least a little familiar with [Node.js](https://nodejs.org/en).
+Next.js is not (or should not be) present on the static site.
 
-First, run the development server:
+## To Run
+Use the command `npm run dev` to run dev environment locally.
+`npm run build` will build the static site, and `npm start` with begin hosting it.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## How is this static?
+Every time I update the content manager I send a webhook to create a new build using the updated data. The static build is then served on [Cloudflare Pages](https://pages.cloudflare.com/). One day I may explain this in more detail on my blog.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Content Management
+For content management I use a [Directus](https://directus.io/) [Docker](https://www.docker.com/) container running within my local network. This is primarily for web traffic / security reasons, but also has the bonus of enforcing my site to remain static (and therefore, very snappy).
