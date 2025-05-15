@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@directus/sdk": "^19.1.0",
+    "@react-three/fiber": "^9.1.2",
     "next": "15.3.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "three": "^0.176.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

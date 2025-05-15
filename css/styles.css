@@ -173,6 +173,7 @@ li {
 
     .page__wrapper {
         max-width: 80%;
+        margin: auto;
     }
 }
 
@@ -239,9 +240,9 @@ li {
 
     .page__wrapper {
         margin: auto;
-        padding-left: 1em;
-        padding-right: 1em;
-        max-width: 100%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        max-width: calc(100% - 2rem);
     }
 }
 
