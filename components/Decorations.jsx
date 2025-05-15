@@ -1,11 +1,24 @@
 import React from 'react';
 import ShootingStar from '@/components/ShootingStar.jsx';
+import { Canvas } from '@react-three/fiber'
 
 const Decorations = () => {
     return (
-        <>
-            {/* <ShootingStar href="https://fuckeduplittleguy.com" /> */}
-        </>
+        <div style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            overflow: 'clip'
+        }}>
+            <div style={{
+                height: '1000px',
+            }}>
+                <Canvas>
+                    <ambientLight />
+                    {/* <ShootingStar href="https://fuckeduplittleguy.com" scale=".05" speed="1" /> */}
+                </Canvas>
+            </div>
+        </div>
     );
 }
 
