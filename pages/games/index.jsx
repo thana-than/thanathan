@@ -1,4 +1,4 @@
-import PageLayout from '@/lib/itemPage.jsx';
+import PageLayout from '@/components/ItemPage.jsx';
 import { getItemPage } from '@/lib/cms';
 
 export async function getStaticProps() {
