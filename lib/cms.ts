@@ -1,8 +1,5 @@
 import { createDirectus, staticToken, rest, readAssetRaw, readFile } from '@directus/sdk';
 import { readItems } from '@directus/sdk';
-const cheerio = require('cheerio');
-const fs = require('fs');
-const path = require('path');
 
 const token = process.env.DIRECTUS_TOKEN;
 const cmsUrl = process.env.CMS_URL || 'https://cms.thanserver.lan';
@@ -66,6 +63,22 @@ export async function request(
     return items;
 }
 
+export async function getSlugPaths(collection, filter = {}, slugField = 'slug') {
+    const pages = await request(collection, {
+        fields: [slugField],
+        filter: filter
+    });
+
+    const paths = pages.map((page) => ({
+        params: { slug: page[slugField] },
+    }));
+
+    return {
+        paths,
+        fallback: false,
+    };
+}
+
 export async function getPage(slug) {
     try {
         const page = (await request('pages', {
@@ -81,7 +94,31 @@ export async function getPage(slug) {
     }
 }
 
+export async function getItemPage(slug, itemFilter = {}) {
+    const page = await getPage(slug);
+
+    if (!page) {
+        return { notFound: true };
+    }
+
+    const items = await request('item', {
+        fields: ['link', 'title', 'date_published', 'status', 'thumbnail', { project_type: ['name'] }, { team: ['name'] }],
+        sort: ['-date_published'],
+        filter: itemFilter,
+    });
+
+    return {
+        props: {
+            page,
+            items
+        },
+    };
+}
+
 async function downloadFile(fileId) {
+    const fs = require('fs');
+    const path = require('path');
+
     const meta = await directus.request(
         readFile(fileId, {
             fields: ['id', 'filename_disk, modified_on'],
@@ -112,6 +149,7 @@ async function downloadFile(fileId) {
 //* This method ensures that the given html content does not have any requirements from our content management server.
 //* It will download the file src's in the html and update the link.
 async function transformHTML(html) {
+    const cheerio = require('cheerio');
     const $ = cheerio.load(html);
     const elements = $('[src]').toArray();
 

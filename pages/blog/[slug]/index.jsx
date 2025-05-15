@@ -1,18 +1,9 @@
-import { request } from '@/lib/cms';
+import { request, getSlugPaths } from '@/lib/cms';
 import { formatDate } from '@/lib/formatting';
 
 //* Get all slugs for static generation
 export async function getStaticPaths() {
-    const posts = await request('posts', { fields: ['slug'] });
-
-    const paths = posts.map((post) => ({
-        params: { slug: post.slug },
-    }));
-
-    return {
-        paths,
-        fallback: false,
-    };
+    return await getSlugPaths('posts');
 }
 
 //* Fetch post data based on slug

@@ -1,20 +1,8 @@
-import { request, getPage } from '@/lib/cms';
+import { getPage, getSlugPaths } from '@/lib/cms';
 import reservedSlugs from '@/lib/reservedSlugs';
 
 export async function getStaticPaths() {
-    const pages = await request('pages', {
-        fields: ['slug'],
-        filter: { 'slug': { '_nin': reservedSlugs } }
-    });
-
-    const paths = pages.map((page) => ({
-        params: { slug: page.slug },
-    }));
-
-    return {
-        paths,
-        fallback: false,
-    };
+    return await getSlugPaths('pages', { 'slug': { '_nin': reservedSlugs } });
 }
 
 //* Fetch page data based on the slug
