@@ -1,31 +1,48 @@
 import React, { useRef, useEffect, useState } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three';
 
 const ShootingStar = (props) => {
-    const speed = props.speed || 1;
     // This reference gives us direct access to the THREE.Mesh object
     const ref = useRef()
     // Hold state for hovered and clicked events
     const [hovered, hover] = useState(false)
+    const { camera } = useThree();
+
     // const [clicked, click] = useState(false)
-    // Subscribe this component to the render-loop, rotate the mesh every frame
     useFrame((state, delta) => {
-        const rot = delta * speed;
+        const rot = delta * .01;
         ref.current.rotation.y += rot;
         ref.current.rotation.z += rot;
+        ref.current.position.x += rot;
 
-        ref.current.position.x += delta;
+        const pos = new THREE.Vector3(ref.current.position.x, ref.current.position.y, ref.current.position.z).project(state.camera);
 
-        //TODO proper wrapping here
-        // const z = 0;
-        // const leftEdge = new THREE.Vector3(-window.outerWidth, 0, z).unproject(state.camera);
-        // const rightEdge = new THREE.Vector3(1, 0, z).project(state.camera);
+        if (pos.x > 1) {
+            hitEdge();
+            pos.x = -1;
+        }
+        else if (pos.x < -1) {
+            hitEdge();
+            pos.x = 1;
+        }
 
-        // if (ref.current.position.x > rightEdge.x + 1) {
-        //     ref.current.position.x = leftEdge.x - 1;
-        // }
+        if (pos.y > 1) {
+            hitEdge();
+            pos.y = -1;
+        }
+        else if (pos.y < -1) {
+            hitEdge();
+            pos.y = 1;
+        }
+
+        const newPos = pos.unproject(state.camera);
+        ref.current.position.x = newPos.x;
     });
+
+    const hitEdge = () => {
+
+    }
 
     //* Open given href link
     const handleClick = () => {
@@ -45,17 +62,24 @@ const ShootingStar = (props) => {
         };
     }, [hovered]);
 
-    const scale = props.scale || .1;
+    useEffect(() => {
+        // Initialize the shooting star off-screen
+        const initialPosition = new THREE.Vector3(-1, .5, 0);
+        const unprojectedPosition = initialPosition.unproject(camera);
+        ref.current.position.set(unprojectedPosition.x, unprojectedPosition.y, unprojectedPosition.z);
+        //ref.current. = scale;
+    }, [camera]);
+
     return (
         <mesh
             {...props}
             ref={ref}
-            scale={1}
+            scale={.1}
             position={[-1, 0, 0]}
             onClick={(event) => { handleClick() }}
             onPointerOver={(event) => hover(true)}
             onPointerOut={(event) => hover(false)}>
-            <octahedronGeometry args={[scale]} />
+            <octahedronGeometry args={[props.scale || .1]} />
             <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
         </mesh>
     );

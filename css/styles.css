@@ -149,6 +149,20 @@ li {
     padding: 1rem;
 }
 
+.page__mask {
+    --mask-start: 5rem;
+    --mask-offset: 1rem;
+    --mask-size: 3rem;
+    mask-image: linear-gradient(to bottom, transparent calc(var(--mask-start) - var(--mask-offset)), white calc(var(--mask-start) - var(--mask-offset) + var(--mask-size)));
+    mask-repeat: no-repeat;
+    mask-size: 100%;
+    transition: mask-image 0.3s ease;
+}
+
+.page__maskOff {
+    mask-image: none;
+}
+
 .page__main {
     opacity: 100;
     padding: 2rem;
@@ -260,7 +274,6 @@ li {
 }
 
 .page__header {
-    background-color: var(--background);
     z-index: 10;
     padding: 3rem 1rem 1rem;
     top: -2rem;
@@ -273,7 +286,6 @@ li {
 }
 
 .page__footer {
-    background-color: var(--background);
     display: flex;
     justify-content: space-between;
     align-items: baseline;
