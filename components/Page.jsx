@@ -17,6 +17,32 @@ export const Block = React.forwardRef(({ children, outer_classes, inner_classes 
     );
 });
 
+export function Mask({ children }) {
+    const ref = React.useRef(null);
+    const [show, setShow] = React.useState(false);
+
+    React.useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = scrollY;
+            const fadeStart = scrollTop // max fade distance
+            setShow(scrollY > scrollFadeMargin);
+
+            ref.current.style.setProperty('--mask-start', `${fadeStart}px`)
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    return (
+        <div
+            ref={ref}
+            className={`page__mask ${show ? '' : 'page__maskOff'}`}
+        >
+            {children}
+        </div>
+    );
+}
+
 export function Header({ title, subHead, date }) {
     const router = useRouter();
     const isHome = router.pathname === '/';
@@ -54,7 +80,7 @@ export function Header({ title, subHead, date }) {
             onMouseLeave={() => setPlayVideo(false)}
         >
             <div className='page__header-border'></div>
-            <div className={`page__header-gradient ${showGradient ? '' : 'hidden'}`}></div>
+            {/* <div className={`page__header-gradient ${showGradient ? '' : 'hidden'}`}></div> */}
             <div className='page__header-block'>
                 <ProfilePic playVideo={isHome || playVideo} />
                 <div className='page__header-titles'>

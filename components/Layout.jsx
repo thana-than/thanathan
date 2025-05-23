@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react'
 import { getDisplayTitle, getSubHead, getDisplayDate } from '@/lib/props';
-import { Header, Main, Footer } from './Page.jsx';
+import { Header, Main, Footer, Mask } from './Page.jsx';
 import { pageTitle } from '@/lib/formatting.js';
 import Head from 'next/head'
 
@@ -19,8 +19,10 @@ export default function Layout({ children, pageProps }) {
             </Head>
             <div className="page">
                 <Header key="static-header" title={title} subHead={subHead} date={displayDate} />
-                <Main> {children} </Main>
-                <Footer />
+                <Mask>
+                    <Main> {children} </Main>
+                    <Footer />
+                </Mask>
             </div>
         </>
 
