@@ -29,6 +29,7 @@ export function Mask({ children }) {
 
             ref.current.style.setProperty('--mask-start', `${fadeStart}px`)
         };
+        handleScroll();
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useMemo } from 'react'
 import { shaderMaterial } from '@react-three/drei';
 import { extend, useThree, useFrame } from '@react-three/fiber';
 import basicVertexShader from '@/shaders/BasicVert.glsl';
@@ -16,9 +16,12 @@ extend({ DefaultMaterial });
 
 const BackgroundMaterial = ({ materialName = "defaultMaterial" }) => {
     const { viewport, size, camera, gl } = useThree();
-    const [mouseClickTime, setMouseClickTime] = useState(10000000.0);
+    // const mouseRef = useRef([NaN, NaN]);
+    // const smoothMouseRef = useRef([NaN, NaN]);
+    const mouseClickTimeRef = useRef(10000000.0);
     const tagName = materialName.charAt(0).toLowerCase() + materialName.slice(1);
     const ref = useRef();
+    const smoothMouseSpeed = 2.0;
 
     useEffect(() => {
         const aspect = size.width / size.height;
@@ -28,8 +31,41 @@ const BackgroundMaterial = ({ materialName = "defaultMaterial" }) => {
         ref.current.uWidth = width;
         ref.current.uHeight = height;
         ref.current.uAspect = aspect;
-    }, [size, camera, ref.current]);
+    }, [size, camera]);
 
+    function moveTowards(currentPosition, targetPosition, delta) {
+        // Calculate the vector from the current position to the target position.
+        const direction = [
+            targetPosition[0] - currentPosition[0],
+            targetPosition[1] - currentPosition[1]
+        ];
+
+        // Calculate the distance to the target.
+        const distance = Math.sqrt(direction[0] * direction[0] + direction[1] * direction[1]);
+
+        // If the distance is less than the speed multiplied by delta time, move directly to the target.
+        if (distance <= delta) {
+            return targetPosition;
+        }
+
+        // Normalize the direction vector.
+        const normalizedDirection = [
+            direction[0] / distance,
+            direction[1] / distance
+        ];
+
+        // Calculate the movement increment based on speed and delta time.
+        const increment = [
+            normalizedDirection[0] * delta,
+            normalizedDirection[1] * delta
+        ];
+
+        // Return the new position.
+        return [
+            currentPosition[0] + increment[0],
+            currentPosition[1] + increment[1]
+        ];
+    }
 
     useEffect(() => {
         const handleScroll = () => {
@@ -38,14 +74,22 @@ const BackgroundMaterial = ({ materialName = "defaultMaterial" }) => {
             ref.current.uScrollY = scrollSpaceY;
         };
         window.addEventListener('scroll', handleScroll);
+        handleScroll();
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     useFrame((state, delta) => {
         if (ref.current) {
             ref.current.uTime = state.clock.getElapsedTime();
-            setMouseClickTime(mouseClickTime + delta);
-            ref.current.uMouseClickTime = mouseClickTime;
+
+            // let movement = moveTowards(smoothMouseRef.current, mouseRef.current, delta * smoothMouseSpeed);
+            // if (!movement[0])
+            //     movement = mouseRef.current;
+            // smoothMouseRef.current = movement;
+            // ref.current.uSmoothMouse = movement;
+
+            mouseClickTimeRef.current += delta;
+            ref.current.uMouseClickTime = mouseClickTimeRef.current;
         }
     });
 
@@ -54,22 +98,22 @@ const BackgroundMaterial = ({ materialName = "defaultMaterial" }) => {
             const rect = gl.domElement.getBoundingClientRect();
             const x = (event.clientX - rect.left) / rect.width;
             const y = 1 - (event.clientY - rect.top) / rect.height;
-
-            ref.current.uMouse = [x, y]; // UV coordinates
+            // mouseRef.current = [x, y];
+            ref.current.uMouse = [x, y];
         };
 
         window.addEventListener('mousemove', handleMouseMove);
         return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, [gl]);
+    }, []);
 
     useEffect(() => {
         const handleMouseClick = (event) => {
-            setMouseClickTime(0);
+            mouseClickTimeRef.current = 0;
         };
 
         window.addEventListener('mousedown', handleMouseClick);
         return () => window.removeEventListener('mousedown', handleMouseClick);
-    }, [gl]);
+    }, []);
 
     return (
         <mesh>

@@ -19,7 +19,7 @@ const Decorations = () => {
             {/* //TODO right now the canvas doesn't accept pointerEvents or else it will block off the page contents
             //TODO raycasting might work, but is also expensive? 
             */}
-            <Canvas style={{ pointerEvents: "none" }}>
+            <Canvas dpr={1.0} style={{ pointerEvents: "none" }}>
                 <ambientLight />
                 <StarryBackground />
                 {/* <ShootingStar href="https://fuckeduplittleguy.com" scale=".05" speed="1" /> */}
