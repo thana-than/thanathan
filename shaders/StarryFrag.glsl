@@ -1,5 +1,5 @@
 #include "lygia/generative/voronoi.glsl"
-precision mediump float;
+precision highp float;
 
 #define PI 3.1415926535897932384626433832795
 
@@ -13,21 +13,22 @@ uniform vec2 uSmoothMouse;
 uniform float uMouseClickTime;
 
 varying vec2 vUv;
-float scrollSpeed = .005;
-float flickerSpeed = .4;
-vec2 sizeMinMax = vec2(.7,.9);
-float scaleMult = 1.2;
-float uvScale = 50.0;
+float scrollSpeed = .01;
+float flickerSpeed = .1;
+float flickerDiff = 10.0;
+vec2 sizeMinMax = vec2(0.85,1.0);
+float scaleDiff = 1.0;
+float uvScale = 75.0;
 float sharpness = 2.0;
-float bloom = 0.8;
-vec2 autoScroll = vec2(0.0, -1.0);
+float bloom = 1.5;
+vec2 autoScroll = vec2(0.0, -.22);
 float mouseShrink = .75;
 float mouseClickResonateTime = .333;
 float mouseClickFlash = .2;
-float mouseVoronoiAffect = 0.1;
-float middleAlpha = 0.85;
-float voronoiScrollAffect = 0.06;
-float mousePassivePush = 1.0;
+float mouseVoronoiAffect = 0.3;
+float middleAlpha = 0.93;
+float voronoiScrollAffect = 0.03;
+float mousePassivePush = 1.33;
 float mousePush = -10.0;
 float voronoiTimeShift = 0.1;
 
@@ -46,21 +47,21 @@ void main() {
 
     vec2 starMap = scrollUV * uvScale + autoScroll * uTime;
     starMap += (mouseUV - aspectUV) * mouseRamp * mousePassivePush;// + (mouseUV - aspectUV) * mouseRamp * mouseClick * mousePush;
-    float vorPos = scrollVoronoi + uTime * voronoiTimeShift + mouseRamp * mouseVoronoiAffect;
+    float vorPos = 10.0 + scrollVoronoi + uTime * voronoiTimeShift + mouseRamp * mouseVoronoiAffect;
     vec3 vor = 1.0 - voronoi(starMap, vorPos);
     float samp = vor.z;
     vec2 dimensionality = vor.xy;
-    float flicker = sin((dimensionality.x + uTime) * PI * dimensionality.y * flickerSpeed) * 0.5 + 0.5;
-    float size = mix(sizeMinMax.x, sizeMinMax.y, dimensionality.x) * scaleMult;
-    float noise = smoothstep(size,1.333,samp);
+    float flicker = sin((dimensionality.x * flickerDiff + dimensionality.y * flickerDiff + uTime) * PI * flickerSpeed)  * 0.5 + 0.5;
+    float size = mix(sizeMinMax.x, sizeMinMax.y, dimensionality.x);
+    float noise = sin(smoothstep(size,1.333,samp) * PI);
     float stars = noise * flicker * sharpness;
-    vec3 starColor = vec3(dimensionality.x, .2, dimensionality.y) + bloom;
-    float fade = vUv.y;
+    vec3 starColor = vec3(sin(dimensionality.x * flickerDiff * PI), .2, sin(dimensionality.y * flickerDiff * PI)) + bloom;
+    float fade = sin(vUv.y);
     float middleAlphaWave = clamp(sin(vUv.x * PI) * 0.5 + 0.5,0.0,1.0);
     fade *= 1.0 - middleAlphaWave * middleAlpha;
     
     float alpha = stars * fade; 
     vec4 col = vec4(starColor.xyz * alpha, alpha);
-    //col = vec4(vor.x);
+    //col = vec4(flicker);
     gl_FragColor = col;
 }
