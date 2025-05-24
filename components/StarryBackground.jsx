@@ -6,7 +6,7 @@ import frag from '@/shaders/StarryFrag.glsl';
 
 const StarryMaterial = shaderMaterial(
     //* Uniform
-    { uTime: 0, uAspect: 1, uMouse: [-1000, -1000], uSmoothMouse: [-1000, -1000], uMouseClickTime: 100000, uScrollY: 0, uWidth: 1920, uHeight: 1080 },
+    { uTime: 0, uAspect: 1, uMouse: [-1000, -1000], uMouseClickTime: 100000, uScrollY: 0, uWidth: 1920, uHeight: 1080 },
     //* Vertex Shader
     vert,
     //* Fragment Shader
