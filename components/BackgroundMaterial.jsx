@@ -16,12 +16,9 @@ extend({ DefaultMaterial });
 
 const BackgroundMaterial = ({ materialName = "defaultMaterial" }) => {
     const { viewport, size, camera, gl } = useThree();
-    // const mouseRef = useRef([NaN, NaN]);
-    // const smoothMouseRef = useRef([NaN, NaN]);
     const mouseClickTimeRef = useRef(10000000.0);
     const tagName = materialName.charAt(0).toLowerCase() + materialName.slice(1);
     const ref = useRef();
-    const smoothMouseSpeed = 2.0;
 
     useEffect(() => {
         const aspect = size.width / size.height;
@@ -48,12 +45,6 @@ const BackgroundMaterial = ({ materialName = "defaultMaterial" }) => {
         if (ref.current) {
             ref.current.uTime = state.clock.getElapsedTime();
 
-            // let movement = moveTowards(smoothMouseRef.current, mouseRef.current, delta * smoothMouseSpeed);
-            // if (!movement[0])
-            //     movement = mouseRef.current;
-            // smoothMouseRef.current = movement;
-            // ref.current.uSmoothMouse = movement;
-
             mouseClickTimeRef.current += delta;
             ref.current.uMouseClickTime = mouseClickTimeRef.current;
         }
@@ -64,7 +55,6 @@ const BackgroundMaterial = ({ materialName = "defaultMaterial" }) => {
             const rect = gl.domElement.getBoundingClientRect();
             const x = (event.clientX - rect.left) / rect.width;
             const y = 1 - (event.clientY - rect.top) / rect.height;
-            // mouseRef.current = [x, y];
             ref.current.uMouse = [x, y];
         };
 
