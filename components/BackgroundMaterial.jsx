@@ -33,40 +33,6 @@ const BackgroundMaterial = ({ materialName = "defaultMaterial" }) => {
         ref.current.uAspect = aspect;
     }, [size, camera]);
 
-    function moveTowards(currentPosition, targetPosition, delta) {
-        // Calculate the vector from the current position to the target position.
-        const direction = [
-            targetPosition[0] - currentPosition[0],
-            targetPosition[1] - currentPosition[1]
-        ];
-
-        // Calculate the distance to the target.
-        const distance = Math.sqrt(direction[0] * direction[0] + direction[1] * direction[1]);
-
-        // If the distance is less than the speed multiplied by delta time, move directly to the target.
-        if (distance <= delta) {
-            return targetPosition;
-        }
-
-        // Normalize the direction vector.
-        const normalizedDirection = [
-            direction[0] / distance,
-            direction[1] / distance
-        ];
-
-        // Calculate the movement increment based on speed and delta time.
-        const increment = [
-            normalizedDirection[0] * delta,
-            normalizedDirection[1] * delta
-        ];
-
-        // Return the new position.
-        return [
-            currentPosition[0] + increment[0],
-            currentPosition[1] + increment[1]
-        ];
-    }
-
     useEffect(() => {
         const handleScroll = () => {
             const scrollOffset = scrollY / window.innerHeight;
