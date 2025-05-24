@@ -5,7 +5,7 @@ import { Breadcrumbs, FooterNav } from '@/components/Nav';
 import ProfilePic from '@/components/ProfilePic';
 
 const scrollFadeMargin = 10;
-const defaultHeaderHeight = 0;//115.2;
+const scrollOffset = -20;
 
 export const Block = React.forwardRef(({ children, outer_classes, inner_classes }, ref) => {
     return (
@@ -23,12 +23,15 @@ export function Mask({ children }) {
 
     React.useEffect(() => {
         const handleScroll = () => {
-            const scrollTop = scrollY;
-            const fadeStart = scrollTop // max fade distance
-            setShow(scrollY > scrollFadeMargin);
-
-            ref.current.style.setProperty('--mask-start', `${fadeStart}px`)
+            requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
+                setShow(scrollY > scrollFadeMargin);
+                if (ref.current) {
+                    ref.current.style.maskPosition = `center ${scrollY + scrollOffset}px`;
+                }
+            });
         };
+
         handleScroll();
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);

@@ -150,10 +150,7 @@ li {
 }
 
 .page__mask {
-    --mask-start: 5rem;
-    --mask-offset: 1rem;
-    --mask-size: 3rem;
-    mask-image: linear-gradient(to bottom, transparent calc(var(--mask-start) - var(--mask-offset)), white calc(var(--mask-start) - var(--mask-offset) + var(--mask-size)));
+    mask-image: linear-gradient(to bottom, transparent 0rem, white 2.6rem);
     mask-repeat: no-repeat;
     mask-size: 100%;
     transition: mask-image 0.3s ease;
