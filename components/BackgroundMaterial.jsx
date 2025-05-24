@@ -17,6 +17,7 @@ extend({ DefaultMaterial });
 const BackgroundMaterial = ({ materialName = "defaultMaterial" }) => {
     const { viewport, size, camera, gl } = useThree();
     const mouseClickTimeRef = useRef(10000000.0);
+    const uTime = React.useRef(0);
     const tagName = materialName.charAt(0).toLowerCase() + materialName.slice(1);
     const ref = useRef();
 
@@ -43,7 +44,8 @@ const BackgroundMaterial = ({ materialName = "defaultMaterial" }) => {
 
     useFrame((state, delta) => {
         if (ref.current) {
-            ref.current.uTime = state.clock.getElapsedTime();
+            uTime.current = (uTime.current + delta) % 1000.0; //* Avoids precision loss by looping after 1000 seconds
+            ref.current.uTime = uTime.current;
 
             mouseClickTimeRef.current += delta;
             ref.current.uMouseClickTime = mouseClickTimeRef.current;
