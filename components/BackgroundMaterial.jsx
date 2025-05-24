@@ -54,23 +54,33 @@ const BackgroundMaterial = ({ materialName = "defaultMaterial" }) => {
 
     useEffect(() => {
         const handleMouseMove = (event) => {
+            //* Only handle mouse movement if we're using a mouse;
+            //? If we ever want to change this we should allow the child material to apply a filter
+            if (event.pointerType !== 'mouse')
+                return;
+
             const rect = gl.domElement.getBoundingClientRect();
             const x = (event.clientX - rect.left) / rect.width;
             const y = 1 - (event.clientY - rect.top) / rect.height;
             ref.current.uMouse = [x, y];
         };
 
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
+        window.addEventListener('pointermove', handleMouseMove);
+        return () => window.removeEventListener('pointermove', handleMouseMove);
     }, []);
 
     useEffect(() => {
         const handleMouseClick = (event) => {
+            //* Only handle mouse click if we're using a mouse;
+            //? If we ever want to change this we should allow the child material to apply a filter
+            if (event.pointerType !== 'mouse')
+                return;
+
             mouseClickTimeRef.current = 0;
         };
 
-        window.addEventListener('mousedown', handleMouseClick);
-        return () => window.removeEventListener('mousedown', handleMouseClick);
+        window.addEventListener('pointerdown', handleMouseClick);
+        return () => window.removeEventListener('pointerdown', handleMouseClick);
     }, []);
 
     return (
