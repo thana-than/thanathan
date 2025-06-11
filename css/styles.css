@@ -72,7 +72,38 @@ ul {
     margin-inline-end: .66rem;
 }
 
-h1:last-child h2:last-child h3:last-child h4:last-child h5:last-child h6:last-child,
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child {
+    margin-top: 0;
+}
+
+table {
+    padding: 0;
+    margin: auto;
+}
+
+td,
+tbody,
+td h1,
+td h2,
+td h3,
+td h4,
+td h5,
+td h6 {
+    padding: 0;
+    margin: 0;
+}
+
+h1:last-child,
+h2:last-child,
+h3:last-child,
+h4:last-child,
+h5:last-child,
+h6:last-child,
 p:last-child,
 span:last-child,
 li:last-child,
@@ -113,6 +144,14 @@ li {
     display: flex;
 }
 
+.page__resume-table {
+    width: 66%;
+    text-align: left;
+}
+
+.page__resume-table ul {
+    list-style: none;
+}
 
 
 @keyframes slideIn {
