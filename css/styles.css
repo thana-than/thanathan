@@ -58,7 +58,8 @@ h2 {
 }
 
 h3 {
-    font-size: 13pt
+    font-size: 13pt;
+    font-weight: bold;
 }
 
 p,
@@ -117,6 +118,7 @@ li {
 }
 
 .page__author {
+    padding-top: 1em;
     font-size: 9pt;
     font-style: italic;
     text-align: right;
