@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "set NODE_EXTRA_CA_CERTS=./certs/thanserver.lan.crt && next dev",
-    "build": "set NODE_EXTRA_CA_CERTS=./certs/thanserver.lan.crt && next build",
+    "generate:rss": "set NODE_EXTRA_CA_CERTS=./certs/thanserver.lan.crt && npx ts-node --transpile-only scripts/generate-rss.ts",
+    "dev": "set NODE_EXTRA_CA_CERTS=./certs/thanserver.lan.crt && npm run generate:rss && next dev",
+    "build": "set NODE_EXTRA_CA_CERTS=./certs/thanserver.lan.crt && npm run generate:rss && next build",
     "start": "npx serve@latest out",
     "lint": "next lint"
   },
@@ -23,6 +24,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.0",
     "raw-loader": "^4.0.2",
+    "ts-node": "^10.9.2",
     "webpack-lygia-loader": "^0.0.1"
   }
 }
