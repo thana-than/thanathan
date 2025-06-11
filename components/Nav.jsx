@@ -25,9 +25,9 @@ export function FooterNav({ className }) {
         <nav className={`page__nav ${className}`}>
             {/* <Link className="page__nav-link" href='/'>home</Link>
             {navSpace} */}
-            <Link className="page__nav-link" href='/about'>about</Link>
-            {navSpace}
             <Link className="page__nav-link" href='/contact'>contact</Link>
+            {navSpace}
+            <Link className="page__nav-link" href='/resume'>resume</Link>
         </nav >
     );
 }
