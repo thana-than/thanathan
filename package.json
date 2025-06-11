@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "generate:rss": "set NODE_EXTRA_CA_CERTS=./certs/thanserver.lan.crt && npx ts-node --transpile-only scripts/generate-rss.ts",
+    "generate:rss": "set NODE_EXTRA_CA_CERTS=./certs/thanserver.lan.crt && npx ts-node scripts/generate-rss.ts",
     "dev": "set NODE_EXTRA_CA_CERTS=./certs/thanserver.lan.crt && npm run generate:rss && next dev",
     "build": "set NODE_EXTRA_CA_CERTS=./certs/thanserver.lan.crt && npm run generate:rss && next build",
     "start": "npx serve@latest out",

@@ -1,7 +1,7 @@
 import { createDirectus, staticToken, rest, readAssetRaw, readFile } from '@directus/sdk';
 import { readItems } from '@directus/sdk';
 
-const token = process.env.DIRECTUS_TOKEN;
+const token = process.env.DIRECTUS_TOKEN || '';
 const cmsUrl = process.env.CMS_URL || 'https://cms.thanserver.lan';
 const cmsAssetsUrl = `${cmsUrl.replace(/^(https?:\/*)/, '')}/assets/`;
 const localCMSPath = '/.cms/';
@@ -63,7 +63,11 @@ export async function request(
     return items;
 }
 
-export async function getSlugPaths(collection, filter = {}, slugField = 'slug') {
+export async function getSlugPaths(
+    collection: string,
+    filter: Record<string, any> = {},
+    slugField: string = 'slug'
+) {
     const pages = await request(collection, {
         fields: [slugField],
         filter: filter
@@ -79,7 +83,7 @@ export async function getSlugPaths(collection, filter = {}, slugField = 'slug') 
     };
 }
 
-export async function getPage(slug) {
+export async function getPage(slug: string) {
     try {
         const page = (await request('pages', {
             filter: { 'slug': { '_eq': slug } },
@@ -94,7 +98,7 @@ export async function getPage(slug) {
     }
 }
 
-export async function getItemPage(slug, itemFilter = {}) {
+export async function getItemPage(slug: string, itemFilter = {}) {
     const page = await getPage(slug);
 
     if (!page) {
@@ -115,7 +119,7 @@ export async function getItemPage(slug, itemFilter = {}) {
     };
 }
 
-async function downloadFile(fileId) {
+async function downloadFile(fileId: string) {
     const fs = require('fs');
     const path = require('path');
 
@@ -148,7 +152,7 @@ async function downloadFile(fileId) {
 
 //* This method ensures that the given html content does not have any requirements from our content management server.
 //* It will download the file src's in the html and update the link.
-async function transformHTML(html) {
+async function transformHTML(html: string) {
     const cheerio = require('cheerio');
     const $ = cheerio.load(html);
     const elements = $('[src]').toArray();
@@ -168,7 +172,7 @@ async function transformHTML(html) {
     return outHTML;
 }
 
-async function streamToBuffer(stream) {
+async function streamToBuffer(stream: any) {
     const reader = stream.getReader();
     const chunks = [];
     let result;

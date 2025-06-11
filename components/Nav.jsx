@@ -29,7 +29,7 @@ export function FooterNav({ className }) {
             {navSpace}
             <Link className="page__nav-link" href='/resume'>resume</Link>
             {navSpace}
-            <Link className="page__nav-link" href='/rss.xml'>rss</Link>
+            <Link className="page__nav-link" href='/rss.xml' target="_blank">rss</Link>
         </nav >
     );
 }

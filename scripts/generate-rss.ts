@@ -31,7 +31,7 @@ async function fetchData() {
     });
 
     //* Unify both posts and items so they share the same required parameters
-    posts = posts.map(post => {
+    posts = posts.map((post: any) => {
         const projectType = { name: "blog" };
         const domain = `${channel.url}/${getCategorySlug(projectType.name)}`;
         const link = `${domain}/${post.slug}`
@@ -46,7 +46,7 @@ async function fetchData() {
     });
 
 
-    items = items.map(item => ({
+    items = items.map((item: any) => ({
         ...item,
         author: item.team,
         domain: `${channel.url}/${getCategorySlug(item.project_type.name)}`,
@@ -63,7 +63,7 @@ async function fetchData() {
 async function generateRSS() {
     const data = await fetchData();
 
-    const rssPosts = data.map(obj => {
+    const rssPosts = data.map((obj: any) => {
         return `
 <item>
     <title>${escape(obj.title)}</title>
