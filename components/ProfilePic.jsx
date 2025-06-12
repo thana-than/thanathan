@@ -16,8 +16,16 @@ export default function ProfilePic({ playVideo }) {
     }, [playVideo]);
 
     return (
-        <>
-            <video ref={videoRef} className='page__header-profilePic' poster="/profile.png" src="/profile.mp4" autoPlay muted loop playsInline />
-        </>
+        <a href="/" className='page__header-profilePic'>
+            <video
+                ref={videoRef}
+                poster="/profile.png"
+                src="/profile.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+            />
+        </a>
     );
 }
