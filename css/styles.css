@@ -179,13 +179,13 @@ li {
 }
 
 .page__header-profilePic {
-    height: 64px;
-    margin-right: 0em;
-    width: auto;
     transform: translate(-1em, 0);
 }
 
 .page__header-profilePic video {
+    height: 64px;
+    margin-right: 0em;
+    width: auto;
     border-radius: 10px;
 }
 
