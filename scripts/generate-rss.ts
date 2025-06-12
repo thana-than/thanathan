@@ -70,7 +70,7 @@ async function generateRSS() {
     <author>${obj.author.email} (${obj.author.name})</author>
     <link>${obj.link}</link>
     <pubDate>${new Date(obj.date_published).toUTCString()}</pubDate>
-    <description>${obj.project_type.name}</description>
+    <description>${obj.description}</description>
     <category domain="${obj.domain}">${obj.project_type.name}</category>
     <guid isPermaLink="${obj.guid.isPermaLink}">${obj.guid.guid}</guid>
 </item>
